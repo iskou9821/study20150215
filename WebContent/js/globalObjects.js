@@ -1,0 +1,2 @@
+window.JavaStudy = {};
+window.JavaStudyModels = {};

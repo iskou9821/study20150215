@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:context="http://www.springframework.org/schema/context"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+     xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+         http://www.springframework.org/schema/data/jpa
+         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+    <!-- プログラム起動時にSQLを実行する設定 -->
+    <!--
+	<jdbc:initialize-database data-source="dataSource">
+		<jdbc:script location="classpath:schema.sql"/>
+		<jdbc:script location="classpath:test-data.sql"/>
+	</jdbc:initialize-database>
+	-->
+	
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="emf"/>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+		</property>
+		
+		<!-- Entityクラスの自動検索  -->
+		<property name="packagesToScan">
+			<list>
+				<value>local.javastudy.persist.entity</value>
+			</list>
+		</property>
+		
+		<!-- Hibernate固有の設定 -->
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				
+			    <!-- キャッシュ関連の設定 -->
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop key="hibernate.cache.provider_configuration_file_resource_path">${hibernate.ehcache_configfile}</prop>
+				<prop key="hibernate.cache.use_query_cache">${hibernate.use_query_cache}</prop>
+				<prop key="hibernate.cache.use_second_level_cache">${hibernate.use_2nd_cache}</prop>
+				
+				<!-- JDBC関連のパフォーマンス設定項目 -->
+				<prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
+				<prop key="hibernate.jdbc.fetch_size">${hibernate.jdbc.fetch_size}</prop>
+				<prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>
+				<prop key="hibernate.default_batch_fetch_size">${hibernate.default_batch_fetch_size}</prop>
+				
+				<!-- SQLのログ出力 -->
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>				
+				<prop key="hibernate.use_sql_comments">${hibernate.sql_comments}</prop>	
+				
+				<!-- プログラム起動時のDDL実行 -->			
+			    <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+			</props>
+		</property>
+	</bean> 
+	
+	<context:annotation-config/>
+	
+	<!-- Repositoryクラスの自動検索 -->
+	<jpa:repositories base-package="local.javastudy.persist.repository"
+		repository-impl-postfix="Impl"
+		entity-manager-factory-ref="emf"
+		transaction-manager-ref="transactionManager"/>
+		
+</beans>

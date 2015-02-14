@@ -1,0 +1,27 @@
+{
+  "name": "JavaStudy",
+  "version": "0.0.1",
+  "authors": [
+    "iskou9821 <kou.ishikawa@gmail.com>"
+  ],
+  "description": "Java Study Project",
+  "main": "index.html",
+  "keywords": [
+    "java",
+    "study"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ember": "~1.10.0",
+    "handlebars": "~2.0.0",
+    "jquery-json": "~2.5.1",
+    "blockui": "*"
+  }
+}

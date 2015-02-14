@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context source="org.eclipse.jst.j2ee.server:sjp">
+  <Resource name="jdbc/javastudy"
+    auth="Container"
+    type="javax.sql.DataSource"
+    factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
+    driverClassName="org.h2.Driver"
+    url="jdbc:h2:./db/javastudy"
+    username="sa"
+    password=""
+    maxActive="20"
+    maxIdle="10"
+    testOnBorrow="true"
+    validationQuery="select 1 from dual" />
+</Context>

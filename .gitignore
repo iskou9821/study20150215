@@ -1,0 +1,43 @@
+# Ignore bundler config.
+/.bundle
+
+# Ignore the default SQLite database
+./db
+/*.sqlite3
+/db
+/*.sqlite3-journal
+
+# Ignore all logfiles and tempfiles
+./log/
+*.log
+/tmp
+
+#for Eclipse
+bin/
+.project
+.classpath
+.settings/
+
+#for bower
+bower_components/
+
+#for maven
+target/
+
+# Ignore other unneeded files
+.doc/
+*.swp
+*~
+.DS_Store
+.idea
+.secret
+
+#for gradle
+build/
+.gradle
+gradlew*
+/gradle/
+
+#config files
+context.xml
+persist.properties

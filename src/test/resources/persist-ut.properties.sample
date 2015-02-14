@@ -1,0 +1,34 @@
+# ***** Table creation on startup *****
+# update : create if not exists.
+# create-drop : force drop & create every time.
+# none : do nothing.
+hibernate.hbm2ddl.auto=create-drop
+
+# ***** Database Connection *****
+#for H2
+jdbc.driver=org.h2.Driver
+jdbc.url=jdbc:h2:./db/javastudy-unittest
+jdbc.user=sa
+jdbc.passwd=
+hibernate.dialect=org.hibernate.dialect.H2Dialect
+
+#for MySQL hoge
+#jdbc.driver=com.mysql.jdbc.Driver
+#jdbc.url=jdbc:mysql://[hostname]/[dbname]
+#jdbc.user=
+#jdbc.passwd=
+#hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+# ***** Hibernate settings *****
+hibernate.ehcache_configfile=./src/test/resources/ehcache.xml
+hibernate.use_query_cache=true
+hibernate.use_2nd_cache=true
+
+hibernate.max_fetch_depth=3
+hibernate.jdbc.fetch_size=1000
+hibernate.jdbc.batch_size=50
+hibernate.default_batch_fetch_size=16
+
+hibernate.show_sql=true
+hibernate.format_sql=true
+hibernate.sql_comments=false

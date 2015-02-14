@@ -1,0 +1,51 @@
+apply plugin:'java'
+apply plugin:'war'
+apply plugin:'eclipse-wtp'
+
+sourceCompatibility='1.8'
+targetCompatibility='1.8'
+project.webAppDirName = 'WebContent'
+
+repositories {
+  mavenCentral()
+}
+
+def hibernateVersion = '4.3.8.Final'
+def springVersion = '4.1.4.RELEASE'
+def jerseyVersion = '1.18.3'
+
+dependencies {
+  runtime 'com.google.guava:guava:18.0',  
+    'commons-beanutils:commons-beanutils:1.9.2',
+    "org.slf4j:slf4j-api:1.7.10",
+    "ch.qos.logback:logback-classic:1.1.2",
+    "org.hibernate:hibernate-entitymanager:${hibernateVersion}",
+    "org.hibernate:hibernate-ehcache:${hibernateVersion}",
+    "commons-dbcp:commons-dbcp:1.4",
+    "com.h2database:h2:1.4.185",
+    "org.springframework:spring-context-support:${springVersion}",
+    "org.springframework:spring-aop:${springVersion}",
+    "org.springframework:spring-orm:${springVersion}",
+    "org.springframework:spring-web:${springVersion}",
+    "org.springframework.data:spring-data-jpa:1.7.2.RELEASE",
+    "com.sun.jersey:jersey-core:${jerseyVersion}",
+    "com.sun.jersey:jersey-server:${jerseyVersion}",
+    "com.sun.jersey:jersey-json:${jerseyVersion}",
+    "com.sun.jersey:jersey-servlet:${jerseyVersion}",
+    "com.sun.jersey.contribs:jersey-multipart:${jerseyVersion}"
+     
+  testCompile 'junit:junit:4.12', 
+    "org.springframework:spring-test:${springVersion}"
+}
+
+compileJava {
+  options.encoding='UTF-8'
+}
+
+war {
+  archiveName = 'study201502.war'
+}
+
+wrapper {
+  gradleVersion = '2.2.1'
+}
