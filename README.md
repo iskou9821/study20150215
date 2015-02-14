@@ -30,3 +30,14 @@ gradle wrapper
 ```
 
 で　WARファイル作成となります。
+
+また、Eclipseからサーブレットコンテナを起動する前に、JavaScriptのライブラリをダウンロードしておいて下さい。  
+ライブラリの管理にはBowerを利用しているため、WebContentディレクトリでコマンドを実行するかたちとなります。
+
+
+```
+cd WebContent
+bower update
+```
+
+となります。
