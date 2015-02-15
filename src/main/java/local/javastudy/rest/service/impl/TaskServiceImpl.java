@@ -45,4 +45,25 @@ public class TaskServiceImpl implements TaskService {
 		repo.deleteAll();
 	}
 
+	@Override
+	public long delete(Task entity) {
+		entity.setDeleted(true);
+		entity.setOrd(Task.DELETED_ORD);
+		repo.save(entity);
+		return entity.getId();
+	}
+
+	@Override
+	public void changeOrder(Task t1, Task t2) {
+		if (t1.getId() == null || t2.getId() == null) {
+			throw new IllegalArgumentException("順番を入れ替えるためには、永続化済みのデータであることが必要です");
+		}
+		int ord1 = t1.getOrd();
+		int ord2 = t2.getOrd();
+		t1.setOrd(ord2);
+		t2.setOrd(ord1);
+		repo.save(t1);
+		repo.save(t2);
+	}
+
 }

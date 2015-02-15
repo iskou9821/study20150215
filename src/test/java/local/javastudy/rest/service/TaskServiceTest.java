@@ -60,7 +60,42 @@ public class TaskServiceTest {
 		assertThat(entity.get(MAX-1).getId(),is(tasks.third.getId()));
 		
 	}
-
+	
+	@Test
+	public void タスクを削除する() {
+		Tasks tasks = new Tasks();
+		
+		Task latest = svc.loadLatest();
+		assertThat(latest.getId(), is(tasks.third.getId()));
+		
+		long id = svc.delete(latest);
+		assertThat(latest.getId(), is(id));
+		
+		latest = svc.loadLatest();
+		assertThat(latest.getId(), is(tasks.second.getId()));
+	}
+	
+	@Test
+	public void タスクの順番を入れ替える() {
+		Tasks tasks = new Tasks();
+		
+		svc.changeOrder(tasks.first, tasks.third);
+		
+		Task latest = svc.loadLatest();
+		Task oldest = svc.loadOldest();
+		assertThat(latest.getId(), is(tasks.first.getId()));
+		assertThat(oldest.getId(), is(tasks.third.getId()));
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void 永続化していないデータでは順番を入れ替えられない() {
+		Tasks tasks = new Tasks();
+		
+		Task t = generateTask("test", "テスト", 0, false);
+		
+		svc.changeOrder(tasks.first, t);
+	}
+	
 	//private utility method
 
 	private Task generateTask(String title, String content, int ord, boolean save) {

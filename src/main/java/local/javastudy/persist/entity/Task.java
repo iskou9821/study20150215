@@ -7,6 +7,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="TASK")
 public class Task extends AbsEntity {
+	public static int DELETED_ORD = -1;
+	
 	@Column(name="TITLE", length=128)
 	private String title;
 	
