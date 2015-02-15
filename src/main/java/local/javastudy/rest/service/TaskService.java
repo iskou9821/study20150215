@@ -19,4 +19,6 @@ public interface TaskService {
 	
 	public void clear();
 	
+	public String getValidTasksAsJson();
+	
 }

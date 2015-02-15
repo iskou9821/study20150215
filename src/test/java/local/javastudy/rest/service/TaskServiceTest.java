@@ -4,10 +4,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat; //Assertのために手動追加
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.List;
 
 import local.javastudy.persist.entity.Task;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -94,6 +96,23 @@ public class TaskServiceTest {
 		Task t = generateTask("test", "テスト", 0, false);
 		
 		svc.changeOrder(tasks.first, t);
+	}
+	
+	@Test
+	public void すべての有効なデータをJson形式にする(){
+		Tasks tasks = new Tasks();		
+		String json = svc.getValidTasksAsJson();
+		
+		assertTrue(json.length() > 0);
+		System.out.println(json);
+		List<Task> taskList = svc.getValidTasks();
+		Task[] taskArrays = taskList.toArray(new Task[0]);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			assertThat(taskArrays.length,is(mapper.readValue(json, Task[].class).length));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//private utility method
