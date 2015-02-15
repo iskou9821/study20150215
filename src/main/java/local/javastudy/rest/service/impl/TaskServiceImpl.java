@@ -1,13 +1,17 @@
 package local.javastudy.rest.service.impl;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import local.javastudy.persist.entity.Task;
 import local.javastudy.persist.repository.TaskRepository;
+import local.javastudy.rest.resource.model.TaskModel;
 import local.javastudy.rest.service.TaskService;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +68,22 @@ public class TaskServiceImpl implements TaskService {
 		t2.setOrd(ord1);
 		repo.save(t1);
 		repo.save(t2);
+	}
+
+	@Override
+	public String getValidTasksAsJson() {
+		List<Task> validData = getValidTasks();
+		List<TaskModel> models = new ArrayList<>();
+		for(Task task : validData){
+			models.add(new TaskModel(task));
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String s = mapper.writeValueAsString(models);
+			return s;
+		} catch (IOException e) {
+			throw new RuntimeException("タスクオブジェクトをJsonに変換できませんでした。",e);
+		}
 	}
 
 }
