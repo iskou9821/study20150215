@@ -1,5 +1,7 @@
 package local.javastudy.rest.service.impl;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import local.javastudy.persist.entity.Task;
@@ -18,6 +20,29 @@ public class TaskServiceImpl implements TaskService {
 	public long save(Task entity) {
 		repo.save(entity);
 		return entity.getId();
+	}
+
+	@Override
+	public Task loadOldest() {
+		Task t = repo.findOldest();
+		return t;
+	}
+
+	@Override
+	public Task loadLatest() {
+		Task t = repo.findLatest();
+		return t;
+	}
+
+	@Override
+	public List<Task> getValidTasks() {
+		List<Task> tasks = repo.findValidTasks();
+		return tasks;
+	}
+
+	@Override
+	public void clear() {
+		repo.deleteAll();
 	}
 
 }
