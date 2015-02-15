@@ -31,6 +31,17 @@ public class AbsEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Version //楽観的ロックのために参照する指定。
 	private Date updatedTime;
+	
+	@Column(name="DELETED", nullable=false)
+	private boolean deleted = false;
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 	@PrePersist
 	protected void preparePersist() {
